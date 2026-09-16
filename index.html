@@ -171,13 +171,7 @@ header.top-bar{
   transform:translateY(-2px);
   box-shadow:var(--shadow-glow);
 }
-.lang-btn{
-  width:auto;
-  padding:0 16px;
-  font-weight:700;
-  font-size:13px;
-  gap:8px;
-}
+.lang-btn{width:auto;min-width:90px;padding:0 20px;font-weight:700;font-size:13px;gap:8px;justify-content:center}
 .lang-flag{font-size:16px}
 .hero{
   padding:140px 0 60px;
@@ -381,14 +375,18 @@ header.top-bar{
 }
 [dir="ltr"] .search-icon{right:auto;left:20px}
 .categories{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
   margin-bottom:40px;
+  max-width:1000px;
+  margin-left:auto;
+  margin-right:auto;
 }
 .cat-btn{
-  padding:10px 20px;
+  width:100%;
+  min-height:52px;
+  padding:10px 14px;
   border-radius:50px;
   border:1px solid var(--card-border);
   background:var(--card-bg);
@@ -400,8 +398,14 @@ header.top-bar{
   transition:var(--transition);
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
   backdrop-filter:blur(10px);
+  text-align:center;
+  white-space:nowrap;
+}
+.cat-btn.vip-btn{
+  grid-column:2 / 3;
 }
 .cat-btn:hover{
   background:var(--card-hover);
@@ -631,26 +635,54 @@ header.top-bar{
   z-index:1;
 }
 .creator-avatar{
-  width:130px;height:130px;
-  border-radius:32px;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  overflow:hidden;
+  padding:0;
+  flex-shrink:0;
+  position:relative;
   background:linear-gradient(135deg,var(--accent-1),var(--accent-3),var(--accent-4));
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:64px;
-  box-shadow:0 20px 60px rgba(100,200,255,0.4);
-  animation:pulse-glow 4s ease-in-out infinite;
-  position:relative;
 }
+
+.creator-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  border-radius:50%;
+  position:relative;
+  z-index:2;
+}
+
 .creator-avatar::after{
   content:'';
   position:absolute;
   inset:-4px;
-  border-radius:36px;
+  border-radius:50%;
   background:linear-gradient(135deg,var(--accent-1),var(--accent-3),var(--accent-4));
   z-index:-1;
   filter:blur(15px);
   opacity:0.6;
+}
+
+.avatar-letter{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Orbitron','Vazirmatn',sans-serif;
+  font-size:72px;
+  font-weight:900;
+  color:#fff;
+  z-index:1;
+  text-shadow:0 0 30px rgba(0,0,0,0.3);
+  letter-spacing:2px;
+  line-height:1;
+  user-select:none;
 }
 .creator-name{
   font-size:28px;
@@ -760,6 +792,10 @@ footer{
   .creator-inner{grid-template-columns:1fr;text-align:center;gap:24px}
   .creator-avatar{margin:0 auto;width:110px;height:110px;font-size:54px}
   .creator-links{justify-content:center}
+  .categories{grid-template-columns:repeat(3,1fr);gap:8px;padding:0 8px;max-width:100%}
+  .cat-btn{padding:8px 6px;font-size:10.5px;gap:5px;min-height:46px;white-space:normal;line-height:1.3}
+  .cat-btn span:first-child{font-size:13px}
+  .cat-btn.vip-btn{grid-column:2 / 4}
   .help-grid{grid-template-columns:1fr}
   .modal{padding:26px 20px}
   .brand-sub{display:none}
@@ -773,6 +809,72 @@ footer{
 ::-webkit-scrollbar-thumb:hover{background:var(--accent-1)}
 .modal::-webkit-scrollbar{width:8px}
 .modal::-webkit-scrollbar-thumb{background:var(--accent-1);border-radius:8px}
+
+.cmd-box{
+  background:var(--navy-2);
+  border:1px solid var(--card-border);
+  border-radius:12px;
+  padding:12px 16px;
+  margin:10px 0 18px;
+}
+
+[data-theme="light"] .cmd-box{
+  background:#0a1428;
+  border-color:rgba(100,200,255,0.2);
+}
+
+.cmd-box.rtl .cmd-row-item{
+  direction:rtl;
+  text-align:right;
+}
+
+.cmd-box.ltr .cmd-row-item{
+  direction:ltr;
+  text-align:left;
+}
+
+.cmd-row-item{
+  font-family:'Orbitron','Vazirmatn',monospace;
+  font-size:13.5px;
+  color:var(--accent-1);
+  padding:5px 0;
+  cursor:pointer;
+  user-select:none;
+}
+
+[data-theme="light"] .cmd-row-item{
+  color:#64c8ff;
+}
+
+.copy-toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%) translateY(60px);
+  background:linear-gradient(135deg, rgba(10,20,40,0.98), rgba(15,30,61,0.95));
+  border:1px solid var(--accent-1);
+  color:var(--text-primary);
+  padding:12px 22px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 10px 40px rgba(100,200,255,0.35);
+  z-index:9999;
+  opacity:0;
+  transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  backdrop-filter:blur(15px);
+  font-family:'Vazirmatn',sans-serif;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+
+.copy-toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
 </style>
 </head>
 <body>
@@ -868,7 +970,10 @@ footer{
   <section class="section" id="creator">
     <div class="creator-section">
       <div class="creator-inner">
-        <div class="creator-avatar">👨‍💻</div>
+        <div class="creator-avatar">
+          <span class="avatar-letter">M</span>
+          <img src="mamal.jpg" alt="MAMAL" onerror="this.style.display='none'">
+        </div>
         <div>
           <h3 class="creator-name">MAMAL / MAMPY</h3>
           <div class="creator-role" data-i18n="creatorRole">سازنده و توسعه‌دهنده اصلی MAMPY Helper</div>
@@ -876,7 +981,7 @@ footer{
             محمدحسین، معروف به MAMAL، توسعه‌دهنده و بنیان‌گذار تیم Xr Team. سازنده ربات‌های حرفه‌ای مدیریت گروه در پیام‌رسان بله. MAMPY Helper حاصل تلاش شبانه‌روزی این تیم برای ارائه بهترین تجربه مدیریت گروه است.
           </p>
           <div class="creator-links">
-            <a href="https://ble.ir/MAMAL_WIN" target="_blank" class="creator-link"><span>💬</span> ble.ir/MAMAL_WIN</a>
+            <a href="https://ble.ir/MAMAL_WIN" target="_blank" class="creator-link"><span>💬</span>مشاهده پروفایل</a>
             <a href="https://ble.ir/MAMPY_Group" target="_blank" class="creator-link"><span>🛠️</span> <span data-i18n="creatorSupport">گروه پشتیبانی</span></a>
             <a href="https://ble.ir/MAMPY_Channel" target="_blank" class="creator-link"><span>📢</span> <span data-i18n="creatorChannel">کانال رسمی</span></a>
           </div>
@@ -893,9 +998,9 @@ footer{
       <span data-i18n="footerMade">ساخته شده با</span>
       <span class="footer-heart">❤️</span>
       <span data-i18n="footerBy">توسط تیم</span>
-      <strong style="color:var(--accent-1)">Xr Team</strong>
+      <a href="https://ble.ir/xrteam" target="_blank" style="color:var(--accent-1);text-decoration:none;font-weight:800;transition:var(--transition)">Xr Team</a>
     </p>
-    <p class="footer-text" style="margin-top:6px" data-i18n="footerCopy">© 2025 MAMPY Helper — تمامی حقوق محفوظ است.</p>
+    <p class="footer-text" style="margin-top:6px" data-i18n="footerCopy">© 1405 MAMPY Helper — تمامی حقوق محفوظ است.</p>
     <span class="footer-version">v1.7.0</span>
   </div>
 </footer>
@@ -1981,7 +2086,7 @@ function renderCategories() {
   wrap.appendChild(allBtn);
   CATEGORIES.forEach(cat => {
     const btn = document.createElement('button');
-    btn.className = 'cat-btn' + (currentCat === cat.id ? ' active' : '');
+    btn.className = 'cat-btn' + (cat.id === 'vip' ? ' vip-btn' : '') + (currentCat === cat.id ? ' active' : '');
     btn.innerHTML = `<span>${cat.icon}</span><span>${currentLang === 'fa' ? cat.fa : cat.en}</span>`;
     btn.onclick = () => { currentCat = cat.id; renderCategories(); renderHelp(); };
     wrap.appendChild(btn);
@@ -2017,9 +2122,6 @@ function renderHelp() {
         <div class="help-card-title">${item.title}</div>
       </div>
       <div class="help-card-desc">${item.desc}</div>
-      <div class="help-cmds">
-        ${item.cmds.slice(0, 3).map(c => `<div class="cmd-line"><span class="cm-key">${c[0]}</span><span class="cm-arrow">←</span><span class="cm-val">${c[1]}</span></div>`).join('')}
-      </div>
     `;
     card.onclick = () => openModal(item);
     grid.appendChild(card);
@@ -2029,6 +2131,12 @@ function renderHelp() {
 function openModal(item) {
   const t = I18N[currentLang];
   const content = $('#modalContent');
+  
+  const isFa = (cmd) => /[\u0600-\u06FF]/.test(cmd);
+  const langCmds = item.cmds.filter(c => currentLang === 'fa' ? isFa(c[0]) : !isFa(c[0]));
+  
+  const langTitle = currentLang === 'fa' ? 'دستورات فارسی' : 'English Commands';
+
   content.innerHTML = `
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-head">
@@ -2037,12 +2145,63 @@ function openModal(item) {
     </div>
     <div class="modal-body">
       <p>${item.desc}</p>
-      <h4>${t.cmds}:</h4>
-      ${item.cmds.map(c => `<div class="cmd-block"><strong style="color:var(--accent-1)">${c[0]}</strong>  →  ${c[1]}</div>`).join('')}
+      ${langCmds.length ? `
+      <h4>🔹 ${langTitle} :</h4>
+      <div class="cmd-box ${currentLang === 'fa' ? 'rtl' : 'ltr'}">
+        ${langCmds.map(c => `<div class="cmd-row-item" data-cmd="${c[0].replace(/"/g,'&quot;')}">✓ ${c[0]}</div>`).join('')}
+      </div>` : ''}
     </div>
   `;
+
+  content.querySelectorAll('.cmd-row-item').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const text = el.getAttribute('data-cmd');
+      copyCmd(text);
+    });
+  });
+
   $('#modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
+}
+
+function copyCmd(text) {
+  const done = () => showCopyToast(text);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    done();
+  }
+}
+
+function showCopyToast(text) {
+  const old = document.querySelector('.copy-toast');
+  if (old) old.remove();
+  
+  const toast = document.createElement('div');
+  toast.className = 'copy-toast';
+  toast.innerHTML = `✅ دستور <span style="color:var(--accent-1);font-family:'Orbitron','Vazirmatn',monospace">${text}</span> با موفقیت کپی شد`;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 2200);
 }
 
 function closeModal() {
