@@ -404,9 +404,7 @@ header.top-bar{
   text-align:center;
   white-space:nowrap;
 }
-.cat-btn.vip-btn{
-  grid-column:2 / 3;
-}
+.cat-btn.vip-btn{grid-column:1 / -1; white-space:nowrap}
 .cat-btn:hover{
   background:var(--card-hover);
   color:var(--text-primary);
@@ -981,7 +979,7 @@ footer{
             محمدحسین، معروف به MAMAL، توسعه‌دهنده و بنیان‌گذار تیم Xr Team. سازنده ربات‌های حرفه‌ای مدیریت گروه در پیام‌رسان بله. MAMPY Helper حاصل تلاش شبانه‌روزی این تیم برای ارائه بهترین تجربه مدیریت گروه است.
           </p>
           <div class="creator-links">
-            <a href="https://ble.ir/MAMAL_WIN" target="_blank" class="creator-link"><span>💬</span>مشاهده پروفایل</a>
+            <a href="https://ble.ir/MAMAL_WIN" target="_blank" class="creator-link"><span>💬</span> <span data-i18n="creatorProfile">مشاهده پروفایل</span></a>
             <a href="https://ble.ir/MAMPY_Group" target="_blank" class="creator-link"><span>🛠️</span> <span data-i18n="creatorSupport">گروه پشتیبانی</span></a>
             <a href="https://ble.ir/MAMPY_Channel" target="_blank" class="creator-link"><span>📢</span> <span data-i18n="creatorChannel">کانال رسمی</span></a>
           </div>
@@ -1038,7 +1036,8 @@ const I18N = {
     noResults: "نتیجه‌ای یافت نشد",
     noResultsDesc: "لطفاً عبارت دیگری را جستجو کنید",
     catAll: "همه",
-    cmds: "دستورات"
+    cmds: "دستورات",
+    creatorProfile: "مشاهده پروفایل",
   },
   en: {
     brandSub: "Smart Group Management Assistant",
@@ -1065,7 +1064,8 @@ const I18N = {
     noResults: "No results found",
     noResultsDesc: "Please try another search term",
     catAll: "All",
-    cmds: "Commands"
+    cmds: "Commands",
+    creatorProfile: "View Profile",
   }
 };
 
